@@ -15,6 +15,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use('/api', router);
 
+module.exports = app;
 // app.route('/api/qa/questions')
 //   .get((req, res) => {
 //     const { product_id, page, count } = req.query;
@@ -39,6 +40,6 @@ app.use('/api', router);
 
 // app.route('/api/')
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`listening on port ${port}`);
+// });
