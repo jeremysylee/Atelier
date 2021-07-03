@@ -6,10 +6,10 @@
   "scripts": {
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "start": "nodemon server/server.js",
+    "start": "nodemon ./server/server.js",
     "build-db": "psql -U miguelbuenviaje -f QANDA.sql",
     "seed": "psql postgres -d atelier-raw -f database/overview.sql && node database/overview_seeder/index.js",
-    "reset": "psql postgres -d atelier-raw -f ETL/reset.sql && node ETL/testSku.js",
+    "reset": "psql postgres -d atelier -f ETL/reset.sql && node ETL/testSku.js",
     "migrate": "node-pg-migrate"
   },
   "repository": {

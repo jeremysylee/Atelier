@@ -28,7 +28,7 @@ describe('PostgreSQL up and running', () => {
   });
 });
 
-describe('API Requests return propery data', () => {
+describe('API Requests return property data', () => {
   test('products get request returns', async () => {
     await supertest(app).get('/api/products')
     .expect(200)

@@ -1,8 +1,8 @@
 // module.exports = {
 //   user: 'postgres',
-//   host: '3.22.74.44',
-//   database: 'postgres',
-//   password: 'password',
+//   host: '3.16.207.149',
+//   database: 'atelier',
+//   password: 'a412mdb',
 //   port: 5432,
 // };
 

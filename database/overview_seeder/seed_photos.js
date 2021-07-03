@@ -39,6 +39,7 @@ const seedPhotos = (err, client) => new Promise((resolve, reject) => {
   });
 
   parseStream.on('finish', () => {
+    console.timeEnd('seedTime-photos');
     console.log('COMPLETE: photos table seeded');
     resolve();
   });

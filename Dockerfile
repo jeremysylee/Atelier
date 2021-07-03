@@ -10,5 +10,7 @@ RUN npm install
 
 COPY . /code
 
-CMD ["node", "server/server.js"]
+EXPOSE 3001
+
+CMD ["npm", "start"]
 
