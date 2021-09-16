@@ -3,6 +3,34 @@ const cors = require('cors');
 const controllers = require('./controllers');
 const db = require('../q_and_a_database/index.js');
 
+const overview = require('./controllers/overview');
+const reviews = require('./controllers/reviewsJG');
+
+// Overview API
+router.get('/products', overview.getProducts);
+router.get('/products/:productId', overview.getProductById);
+router.get('/products/:productId/styles', overview.getStyles);
+router.get('/products/:productId/related', overview.getRelated);
+
+// Reviews API
+router
+  .route('/reviews/meta')
+  .get(reviews.getMeta);
+
+router
+  .route('/reviews/:product_id')
+  .get(reviews.get)
+  .post(reviews.addReview);
+
+router
+  .route('/reviews/:id/helpful')
+  .put(reviews.updateHelpful);
+
+router
+  .route('/reviews/:id/report')
+  .put(reviews.updateReport);
+
+// Q&A API
 router
   .route('/qa/questions')
   .get((req, res) => {
@@ -127,33 +155,5 @@ router.put('/qa/answers/:answer_id/report', (req, res) => {
     }
   });
 });
-const controller = require('./controllers/reviewsJG');
-const overview = require('./controllers/overview');
-
-// const controller = require('./controllers/reviewsJG');
-
-
-router.get('/products', overview.getProducts);
-router.get('/products/:productId', overview.getProductById);
-router.get('/products/:productId/styles', overview.getStyles);
-router.get('/products/:productId/related', overview.getRelated);
-
-router
-.route('/reviews/meta')
-.get(controller.getMeta);
-
-
-router
-.route('/reviews/:product_id')
-.get(controller.get)
-.post(controller.addReview);
-
-router
-  .route('/reviews/:id/helpful')
-  .put(controller.updateHelpful);
-
-router
-  .route('/reviews/:id/report')
-  .put(controller.updateReport);
 
 module.exports = router;
