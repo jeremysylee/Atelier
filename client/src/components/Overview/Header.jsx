@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
 import axios from 'axios';
-import TOKEN from '/Users/jeremysylee/hrla/atelier-client/client/dist/config.js';
+import TOKEN from '../../../dist/config.js';
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
 const auth = { headers: { Authorization: TOKEN.TOKEN } };
 

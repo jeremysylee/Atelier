@@ -1,7 +1,7 @@
 const path = require('path');
 
-const SRC_DIR = path.join(__dirname, 'client/src');
-const DIST_DIR = path.join(__dirname, 'client/dist');
+const SRC_DIR = path.join(__dirname, '/src');
+const DIST_DIR = path.join(__dirname, '/dist');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
