@@ -1,7 +1,7 @@
+/* eslint-disable camelcase */
+
 const router = require('express').Router();
-const cors = require('cors');
-const controllers = require('./controllers');
-const db = require('../q_and_a_database/index.js');
+const db = require('../database');
 
 const overview = require('./controllers/overview');
 const reviews = require('./controllers/reviewsJG');
@@ -34,7 +34,8 @@ router
 router
   .route('/qa/questions')
   .get((req, res) => {
-    let { product_id, count } = req.query;
+    const { product_id } = req.query;
+    let { count } = req.query;
 
     if (!count) {
       count = 4;
@@ -48,7 +49,12 @@ router
     });
   })
   .post((req, res) => {
-    const { product_id, body, name, email } = req.body;
+    const {
+      product_id,
+      body,
+      name,
+      email,
+    } = req.body;
 
     db.addQuestion(product_id, body, name, email, (err, results) => {
       if (err) {
@@ -62,7 +68,7 @@ router
 router
   .route('/qa/questions/:question_id/answers')
   .get((req, res) => {
-    let { question_id } = req.params;
+    const { question_id } = req.params;
     let { count } = req.query;
 
     if (!count) {
@@ -78,12 +84,17 @@ router
   })
   .post((req, res) => {
     const { question_id } = req.params;
-    let { body, date_written, name, email, photos } = req.body;
+    const {
+      body,
+      name,
+      email,
+    } = req.body;
+    let { date_written, photos } = req.body;
     let dt = new Date();
     dt = dt.getTime();
     // console.log(dt);
     if (!date_written) {
-      let dt = new Date();
+      dt = new Date();
       dt = dt.getTime();
       date_written = dt;
     }
@@ -101,7 +112,7 @@ router
 
 router.put('/qa/questions/:question_id/helpful', (req, res) => {
   // console.log('req.body in helpful put: ', req.body);
-  let { question_id } = req.params;
+  const { question_id } = req.params;
   if (!question_id) {
     res.send('error');
   }
@@ -115,7 +126,7 @@ router.put('/qa/questions/:question_id/helpful', (req, res) => {
 });
 
 router.put('/qa/answers/:answer_id/helpful', (req, res) => {
-  let { answer_id } = req.params;
+  const { answer_id } = req.params;
   if (!answer_id) {
     res.send('error');
   }
@@ -129,7 +140,7 @@ router.put('/qa/answers/:answer_id/helpful', (req, res) => {
 });
 
 router.put('/qa/questions/:question_id/report', (req, res) => {
-  let { question_id } = req.params;
+  const { question_id } = req.params;
   if (!question_id) {
     res.send('error');
   }
@@ -143,7 +154,7 @@ router.put('/qa/questions/:question_id/report', (req, res) => {
 });
 
 router.put('/qa/answers/:answer_id/report', (req, res) => {
-  let { answer_id } = req.params;
+  const { answer_id } = req.params;
   if (!answer_id) {
     res.send('error');
   }
