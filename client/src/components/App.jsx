@@ -19,7 +19,7 @@ const App = () => {
   console.log('here:', window.location.pathname);
   const product = useSelector(state => state.productReducer.product);
   const dispatch = useDispatch();
-  let [productId, setProductId] = useState(16056);
+  let [productId, setProductId] = useState(1);
 
   const [reviews, setReviews] = useState({
     results: [],
@@ -30,21 +30,36 @@ const App = () => {
 
   const [sort, setSort] = useState(reviews.sort);
   const [metaReview, setMetaReview] = useState({});
-
+  const [url, setURL] = useState(1);
 
   useEffect(() => {
     getProduct();
-  }, []);
+    getUrl();
+  }, [window.location.pathname]);
+
+  // useEffect(() => {
+  //   getUrl();
+  //   // setProductId(product.id);
+  //   // getStyles(product.id);
+  //   // getMetaReviews();
+  //   // getAllreviews();
+  // }, [product]);
 
   useEffect(() => {
-    setProductId(product.id);
-    getStyles(product.id);
-    // getMetaReviews();
-    // getAllreviews();
-  }, [product]);
+    getProduct();
+  }, [url]);
+
+  const getUrl = async () => {
+    setURL(window.location.pathname);
+    console.log(window.location.pathname.slice(1), ',><><><><');
+    setProductId(window.location.pathname.slice(1));
+    console.log(productId);
+    getProduct();
+  };
 
   const getProduct = () => {
-    axios.get(`${url}/products/${product.id}`, auth)
+    console.log('potato');
+    axios.get(`http://localhost:3001/products/2`, auth)
       .then(({ data }) => {
         dispatch({ type: 'CHANGE_PRODUCT', product: data });
         getStyles(data.id);
@@ -54,7 +69,7 @@ const App = () => {
 
   const getStyles = (id) => {
     if (id) {
-      axios.get(`${url}/products/${id}/styles`, auth)
+      axios.get(`${url}/products/${productId}/styles`, auth)
         .then(({ data }) => {
           console.log(data);
           dispatch({ type: 'SET_STYLES', styles: data.results});
@@ -139,12 +154,12 @@ const App = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <Overview />
-      <RelatedItems />
-      <div className='QandA'>
+      {/* <RelatedItems /> */}
+      {/* <div className='QandA'>
         <QandA productId={productId}/>
-      </div>
+      </div> */}
       {/* <RatingsAndReviews
         reviews={reviews.results}
         moreReviews={reviews.moreReviews}
