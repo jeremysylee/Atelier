@@ -22,6 +22,8 @@ const Cards = (props) => {
 
   const switchProduct = () => {
     // console.log('DOne here ', props.product.name);
+    // window.location.pathname = props.product.id;
+    window.history.replaceState(null, null, `http://localhost:3000/${props.product.id}`);
     dispatch({ type: 'CHANGE_PRODUCT', product: props.product});
   };
 

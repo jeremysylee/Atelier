@@ -11,31 +11,36 @@ import RelatedItems from './relatedItems/RelatedItems.jsx';
 
 // api option data //
 import TOKEN from '../../dist/config.js';
-const url = 'http://localhost:3001';
+const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
 const auth = { headers: { Authorization: TOKEN.TOKEN } };
 
 
 const App = () => {
-  console.log('here:', window.location.pathname);
   const product = useSelector(state => state.productReducer.product);
   const dispatch = useDispatch();
-  let [productId, setProductId] = useState(1);
 
-  const [reviews, setReviews] = useState({
-    results: [],
-    moreReviews: [],
-    allReviews: [],
-    sort: 'relevance'
-  });
+  // const [url, setURL] = useState(1);
 
-  const [sort, setSort] = useState(reviews.sort);
-  const [metaReview, setMetaReview] = useState({});
-  const [url, setURL] = useState(1);
+  // const [reviews, setReviews] = useState({
+  //   results: [],
+  //   moreReviews: [],
+  //   allReviews: [],
+  //   sort: 'relevance'
+  // });
 
-  useEffect(() => {
-    getProduct();
-    getUrl();
-  }, [window.location.pathname]);
+  // const [sort, setSort] = useState(reviews.sort);
+  // const [metaReview, setMetaReview] = useState({});
+
+  const getProductFromUrl = () => {
+    // setURL(window.location.pathname);
+    const pathname = window.location.pathname;
+    return pathname.slice(1, pathname.length - 1);
+  };
+  let [productId, setProductId] = useState(42371);
+  // useEffect(() => {
+  //   getProduct();
+  //   getUrl();
+  // }, [window.location.pathname]);
 
   // useEffect(() => {
   //   getUrl();
@@ -47,19 +52,14 @@ const App = () => {
 
   useEffect(() => {
     getProduct();
-  }, [url]);
-
-  const getUrl = async () => {
-    setURL(window.location.pathname);
-    console.log(window.location.pathname.slice(1), ',><><><><');
-    setProductId(window.location.pathname.slice(1));
-    console.log(productId);
-    getProduct();
-  };
+  }, []);
+  useEffect(() => {
+    console.log('><><><', product.id);
+    getStyles(product.id);
+  }, [product]);
 
   const getProduct = () => {
-    console.log('potato');
-    axios.get(`http://localhost:3001/products/2`, auth)
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${productId}`, auth)
       .then(({ data }) => {
         dispatch({ type: 'CHANGE_PRODUCT', product: data });
         getStyles(data.id);
@@ -69,7 +69,7 @@ const App = () => {
 
   const getStyles = (id) => {
     if (id) {
-      axios.get(`${url}/products/${productId}/styles`, auth)
+      axios.get(`${url}/products/${id}/styles`, auth)
         .then(({ data }) => {
           console.log(data);
           dispatch({ type: 'SET_STYLES', styles: data.results});
@@ -156,7 +156,7 @@ const App = () => {
     <div>
       {/* <Header /> */}
       <Overview />
-      {/* <RelatedItems /> */}
+      <RelatedItems />
       {/* <div className='QandA'>
         <QandA productId={productId}/>
       </div> */}
