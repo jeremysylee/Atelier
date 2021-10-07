@@ -41,6 +41,8 @@ CREATE TABLE styles (
       ON UPDATE CASCADE
 );
 
+CREATE INDEX styles_id_idx ON styles USING btree (id ASC nulls LAST);
+
 CREATE TABLE photos (
   id SERIAL,
   style_id INTEGER,
