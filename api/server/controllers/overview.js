@@ -14,7 +14,7 @@ module.exports = {
       if (err) { res.status(400).send(err); }
       const dataShaped = response[0].rows[0];
       dataShaped.features = response[1].rows;
-      res.status(200).send(response);
+      res.status(200).send(dataShaped);
     }, productId);
   },
   getStyles: (req, res) => {

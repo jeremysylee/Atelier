@@ -11,40 +11,55 @@ import RelatedItems from './relatedItems/RelatedItems.jsx';
 
 // api option data //
 import TOKEN from '../../dist/config.js';
-const url = 'http://localhost:3001';
+const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
 const auth = { headers: { Authorization: TOKEN.TOKEN } };
 
 
 const App = () => {
-  console.log('here:', window.location.pathname);
   const product = useSelector(state => state.productReducer.product);
   const dispatch = useDispatch();
-  let [productId, setProductId] = useState(16056);
 
-  const [reviews, setReviews] = useState({
-    results: [],
-    moreReviews: [],
-    allReviews: [],
-    sort: 'relevance'
-  });
+  // const [url, setURL] = useState(1);
 
-  const [sort, setSort] = useState(reviews.sort);
-  const [metaReview, setMetaReview] = useState({});
+  // const [reviews, setReviews] = useState({
+  //   results: [],
+  //   moreReviews: [],
+  //   allReviews: [],
+  //   sort: 'relevance'
+  // });
 
+  // const [sort, setSort] = useState(reviews.sort);
+  // const [metaReview, setMetaReview] = useState({});
+
+  const getProductFromUrl = () => {
+    // setURL(window.location.pathname);
+    const pathname = window.location.pathname;
+    return pathname.slice(1, pathname.length - 1);
+  };
+  let [productId, setProductId] = useState(42371);
+  // useEffect(() => {
+  //   getProduct();
+  //   getUrl();
+  // }, [window.location.pathname]);
+
+  // useEffect(() => {
+  //   getUrl();
+  //   // setProductId(product.id);
+  //   // getStyles(product.id);
+  //   // getMetaReviews();
+  //   // getAllreviews();
+  // }, [product]);
 
   useEffect(() => {
     getProduct();
   }, []);
-
   useEffect(() => {
-    setProductId(product.id);
+    console.log('><><><', product.id);
     getStyles(product.id);
-    // getMetaReviews();
-    // getAllreviews();
   }, [product]);
 
   const getProduct = () => {
-    axios.get(`${url}/products/${product.id}`, auth)
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${productId}`, auth)
       .then(({ data }) => {
         dispatch({ type: 'CHANGE_PRODUCT', product: data });
         getStyles(data.id);
@@ -139,12 +154,12 @@ const App = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <Overview />
       <RelatedItems />
-      <div className='QandA'>
+      {/* <div className='QandA'>
         <QandA productId={productId}/>
-      </div>
+      </div> */}
       {/* <RatingsAndReviews
         reviews={reviews.results}
         moreReviews={reviews.moreReviews}
